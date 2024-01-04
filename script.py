@@ -68,22 +68,14 @@ medicine_keywords = get_keywords_from_website(website_url)
 def handle_message(update: Update, context: CallbackContext):
     user_message = update.message.text
     global chat
-
     if chat is None:
         chat = model.start_chat(history=[])
     else:
         print(chat.history)
+    response = chat.send_message(user_message)
+    response_text = response.text if hasattr(response, 'text') else "Sorry, I couldn't process your request."
 
-    # Check if the message contains keywords related to medicine subjects
-    if any(keyword in user_message.lower() for keyword in medicine_keywords):
-        response = chat.send_message(user_message)
-        response_text = response.text if hasattr(response, 'text') else "Sorry, I couldn't process your request."
-        update.message.reply_text(response_text)
-    else:
-        # If the message doesn't contain medicine-related keywords, inform the user
-        update.message.reply_text("Sorry, this topic is not allowed. Please stick to medicine-related subjects.")
-
-# Rest of your code remains unchanged...
+    update.message.reply_text(response_text)
 def handle_photo(update: Update, context: CallbackContext):
     photo = update.message.photo[-1]
     file = context.bot.get_file(photo.file_id)
