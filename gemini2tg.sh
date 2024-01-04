@@ -48,6 +48,7 @@ python -V 2>&1 | tee -a "$LOG_FILE"
 pip install python-telegram-bot==13.13
 pip install Pillow
 pip install -q -U google-generativeai
+pip install requests beautifulsoup4
 REQUIREMENTS_FILE="requirements.txt"
 PYTHON_SCRIPT="script.py"
 
