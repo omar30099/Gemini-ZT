@@ -35,8 +35,18 @@ global chat
     
 def start(update, context):
     global chat
-    update.message.reply_text("Hello! I am your chatbot. Send me a message to start.")
+
+    # Customize the introduction message as desired
+    introduction_message = "مرحبًا! أنا بوت مساعد لفريق الزيتونة. سأساعدك في شرح المواضيع الطبية وحل الأسئلة. اسأل ما تريد بكل يسر! 🌟 " \
+                           "Hello! I'm the Zatouna team's AI assistant bot. I'll help explain medical topics and answer questions. Feel free to ask anything! 🌟"
+
+    update.message.reply_text(introduction_message)
+
+    # Initialize the chat
     chat = model.start_chat(history=[])
+
+# Rest of your code remains unchanged...
+
 def handle_message(update: Update, context: CallbackContext):
     user_message = update.message.text
     global chat
