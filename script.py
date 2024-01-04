@@ -37,17 +37,17 @@ def start(update, context):
     global chat
 
     # Customize the introduction message as desired
-    introduction_message = "مرحبًا! أنا بوت مساعد لفريق الزيتونة. سأساعدك في شرح المواضيع الطبية وحل الأسئلة. اسأل ما تريد بكل يسر! 🌟 " \
-                           "Hello! I'm Al Zatouna team's AI assistant bot. I'll help explain medical topics and answer questions. Feel free to ask anything! 🌟"
+    introduction_message_part1 = "مرحبًا! أنا بوت مساعد لفريق الزيتونة. سأساعدك في شرح المواضيع الطبية وحل الأسئلة. اسأل ما تريد بكل يسر!"
+    introduction_message_part2 = "Hello! I'm Al Zatouna team's AI assistant bot. I'll help explain medical topics and answer questions. Feel free to ask anything! 🌟"
 
-    update.message.reply_text(introduction_message)
-
+    update.message.reply_text(introduction_message_part1)
+    update.message.reply_text(introduction_message_part2)
+  
     # Initialize the chat
     chat = model.start_chat(history=[])
 
 # Rest of your code remains unchanged...
 
-# Modify the handle_message function to use these keywords
 def handle_message(update: Update, context: CallbackContext):
     user_message = update.message.text
     global chat
