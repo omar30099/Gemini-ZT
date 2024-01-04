@@ -7,8 +7,6 @@ import json
 import os
 import logging
 import PIL.Image
-import requests
-from bs4 import BeautifulSoup
 from io import BytesIO
 def to_markdown(text):
   text = text.replace('•', '  *')
@@ -48,21 +46,6 @@ def start(update, context):
     chat = model.start_chat(history=[])
 
 # Rest of your code remains unchanged...
-
-def get_keywords_from_website(url):
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-
-    # Extract keywords from the website
-    keywords = [tag.text.lower() for tag in soup.select('.cloud a')]
-
-    return keywords
-
-# URL of the website with keywords
-website_url = "https://www.archivesofmedicalscience.com/Keywords"
-
-# Get the keywords from the website
-medicine_keywords = get_keywords_from_website(website_url)
 
 # Modify the handle_message function to use these keywords
 def handle_message(update: Update, context: CallbackContext):
