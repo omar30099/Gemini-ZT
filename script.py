@@ -7,6 +7,8 @@ import json
 import os
 import logging
 import PIL.Image
+import requests
+from bs4 import BeautifulSoup
 from io import BytesIO
 def to_markdown(text):
   text = text.replace('•', '  *')
@@ -38,7 +40,7 @@ def start(update, context):
 
     # Customize the introduction message as desired
     introduction_message = "مرحبًا! أنا بوت مساعد لفريق الزيتونة. سأساعدك في شرح المواضيع الطبية وحل الأسئلة. اسأل ما تريد بكل يسر! 🌟 " \
-                           "Hello! I'm the Zatouna team's AI assistant bot. I'll help explain medical topics and answer questions. Feel free to ask anything! 🌟"
+                           "Hello! I'm Al Zatouna team's AI assistant bot. I'll help explain medical topics and answer questions. Feel free to ask anything! 🌟"
 
     update.message.reply_text(introduction_message)
 
@@ -47,17 +49,41 @@ def start(update, context):
 
 # Rest of your code remains unchanged...
 
+def get_keywords_from_website(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, 'html.parser')
+
+    # Extract keywords from the website
+    keywords = [tag.text.lower() for tag in soup.select('.cloud a')]
+
+    return keywords
+
+# URL of the website with keywords
+website_url = "https://www.archivesofmedicalscience.com/Keywords"
+
+# Get the keywords from the website
+medicine_keywords = get_keywords_from_website(website_url)
+
+# Modify the handle_message function to use these keywords
 def handle_message(update: Update, context: CallbackContext):
     user_message = update.message.text
     global chat
+
     if chat is None:
         chat = model.start_chat(history=[])
     else:
         print(chat.history)
-    response = chat.send_message(user_message)
-    response_text = response.text if hasattr(response, 'text') else "Sorry, I couldn't process your request."
 
-    update.message.reply_text(response_text)
+    # Check if the message contains keywords related to medicine subjects
+    if any(keyword in user_message.lower() for keyword in medicine_keywords):
+        response = chat.send_message(user_message)
+        response_text = response.text if hasattr(response, 'text') else "Sorry, I couldn't process your request."
+        update.message.reply_text(response_text)
+    else:
+        # If the message doesn't contain medicine-related keywords, inform the user
+        update.message.reply_text("Sorry, this topic is not allowed. Please stick to medicine-related subjects.")
+
+# Rest of your code remains unchanged...
 def handle_photo(update: Update, context: CallbackContext):
     photo = update.message.photo[-1]
     file = context.bot.get_file(photo.file_id)
