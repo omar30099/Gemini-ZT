@@ -1,5 +1,5 @@
 #!/bin/bash
-REPO_URL="https://github.com/zhuchangyi/Gemini2tg.git"
+REPO_URL="https://github.com/omar30099/Gemini-ZT.git"
 SCRIPT_NAME="script.py"
 
 sudo apt-get update -y
