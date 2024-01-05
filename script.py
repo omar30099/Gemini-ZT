@@ -39,7 +39,7 @@ def start(update, context):
     # Customize the introduction message as desired
     introduction_message_part1 = "مرحبًا! أنا بوت مساعد لفريق الزيتونة. سأساعدك في شرح المواضيع الطبية وحل الأسئلة. اسأل ما تريد بكل يسر!"
     introduction_message_part2 = "Hello! I'm Al Zatouna team's AI assistant bot. I'll help explain medical topics and answer questions. Feel free to ask anything! 🌟"
-    introduction_message_part1 = "If you haven't joined the channel yet, a friendly reminder to join via the following link: Al Zatouna Channel. (https://t.me/AlZatounaZNU) 👈"
+    introduction_message_part3 = "If you haven't joined the channel yet, a friendly reminder to join via the following link: (https://t.me/AlZatounaZNU) 👈"
   
     update.message.reply_text(introduction_message_part1)
     update.message.reply_text(introduction_message_part2)
